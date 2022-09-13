@@ -1,9 +1,15 @@
+/** Models */
 const { User } = require('./user.model')
-const { Tasks } = require('./tasks.model')
+const { Task } = require('./tasks.model')
 
-const initModels = () =>{
-    User.hasMany(Tasks, { foreignKey: 'userId' })
-    Tasks.belongsTo(User)
-}
+/**
+ *  initModels
+ */
+const initModels = () => {
+  // 1 User <----> M Task
+  User.hasMany(Task, { foreignKey: "userId" });
+  Task.belongsTo(User);
+};
 
-module.exports = { initModels } 
+/** exports */
+module.exports = { initModels };

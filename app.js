@@ -1,15 +1,25 @@
-const express = require('express')
+const express = require("express");
 
-const app = express()
+// Routers
+const { usersRouter } = require('./routes/user.routes')
+const { tasksRouter } = require('./routes/tasks.routes')
 
-app.use(express.json())
+// Init our Express app
+const app = express();
 
+// Enable Express app to receive JSON data
+app.use(express.json());
 
-app.all('*', (req, res) => {
-    res.status(404).json({
-        status: 'error',
-        message: `${req.method} ${req.url} does not exists in our server`
-    })
-})
+// Define endpoints
+app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/tasks", tasksRouter);
 
-module.exports = { app }
+// Catch non-existing endpoints
+app.all("*", (req, res) => {
+  res.status(404).json({
+    status: "error",
+    message: `${req.method} ${req.url} does not exists in our server`,
+  });
+});
+
+module.exports = { app };
